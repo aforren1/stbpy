@@ -11,7 +11,7 @@ y = im.resize(x, 200, 200)
 #plt.show()
 
 z = im.write_png_to_memory(x)
-print((x.shape[0] * x.shape[1] * x.shape[2]) - z.shape)
+print((x.shape[0] * x.shape[1] * x.shape[2]) - z.shape[0])
 
 w = im.load_from_memory(z)
 
