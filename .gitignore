@@ -5,4 +5,4 @@ stb.egg-info/
 *.pyd
 *.so
 cython_debug/
-
+.vscode/

@@ -16,4 +16,4 @@ print((x.shape[0] * x.shape[1] * x.shape[2]) - z.shape[0])
 
 w = im.load_from_memory(z)
 
-print((w == x).all())
+assert((w == x).all())
