@@ -1,6 +1,7 @@
 # cython: c_string_type=unicode, c_string_encoding=ascii
 import numpy as np
 cimport numpy as np
+from libc.stdlib cimport malloc, free
 
 cdef extern from "defs.h":
     pass
@@ -42,10 +43,13 @@ cpdef load_from_memory(const unsigned char[:] buffer):
     return arr
 
 cpdef resize(const unsigned char[:, :, :] image, int width, int height):
-    cdef unsigned char* data
+    cdef unsigned char* data = <unsigned char*> malloc(width * height * image.shape[2])
+    if not data:
+        raise MemoryError()
     cdef int result = stbir_resize_uint8(&image[0, 0, 0], image.shape[0], image.shape[1], 0,
                                          data, width, height, 0, image.shape[2])
     if result == 0:
+        free(data)
         raise RuntimeError('Error resizing the image.')
     cdef np.ndarray[np.uint8_t, ndim=3] arr
     cdef np.npy_intp *dims = [width, height, image.shape[2]]

@@ -4,3 +4,5 @@ stb.egg-info/
 *.c
 *.pyd
 *.so
+cython_debug/
+
