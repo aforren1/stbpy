@@ -15,7 +15,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.1",
+    version="0.0.2a1",
     install_requires=['numpy'],
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
