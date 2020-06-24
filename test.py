@@ -1,7 +1,8 @@
 from stb import image as im
+import os.path as op
 #import matplotlib.pyplot as plt
 
-x = im.load('cat.png')
+x = im.load(op.join(op.dirname(__file__), 'cat.png'))
 y = im.resize(x, 200, 200)
 
 #plt.imshow(x.reshape(x.shape[1], x.shape[0], x.shape[2]))
