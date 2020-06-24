@@ -1,0 +1,6 @@
+build/
+stb.egg-info/
+*.html
+*.c
+*.pyd
+*.so
