@@ -1,5 +1,6 @@
 # cython: c_string_type=unicode, c_string_encoding=ascii
 cimport numpy as np
+import numpy as np
 from libc.stdlib cimport malloc, free
 import os.path as op
 
@@ -29,7 +30,7 @@ cdef extern from '../_stb/stb_image_write.h':
 cdef extern from "numpy/arrayobject.h":
     void PyArray_ENABLEFLAGS(np.ndarray arr, int flags)
 
-cpdef unsigned char[:, :, :] load(const char* filename):
+cpdef np.ndarray[np.uint8_t, ndim=3] load(const char* filename):
     cdef int x, y, channels_in_file, size
     cdef unsigned char* data = stbi_load(filename, &x, &y, &channels_in_file, 0)
     if data is NULL:
@@ -40,7 +41,7 @@ cpdef unsigned char[:, :, :] load(const char* filename):
     PyArray_ENABLEFLAGS(arr, np.NPY_ARRAY_OWNDATA)
     return arr
 
-cpdef unsigned char[:, :, :] load_from_memory(const unsigned char[:] buffer):
+cpdef np.ndarray[np.uint8_t, ndim=3] load_from_memory(const unsigned char[:] buffer):
     cdef int x, y, channels_in_mem, size
     cdef unsigned char* data = stbi_load_from_memory(&buffer[0], buffer.shape[0], &x, &y, &channels_in_mem, 0)
     if data is NULL:
@@ -51,7 +52,7 @@ cpdef unsigned char[:, :, :] load_from_memory(const unsigned char[:] buffer):
     PyArray_ENABLEFLAGS(arr, np.NPY_ARRAY_OWNDATA)
     return arr
 
-cpdef unsigned char[:, :, :] resize(const unsigned char[:, :, :] image, int width, int height):
+cpdef np.ndarray[np.uint8_t, ndim=3] resize(const unsigned char[:, :, :] image, int width, int height):
     cdef unsigned char* data = <unsigned char*> malloc(width * height * image.shape[2])
     if not data:
         raise MemoryError()
@@ -83,7 +84,7 @@ cpdef void write(const char* filename, const unsigned char[:, :, :] image, int q
         raise RuntimeError('Write failed.')
 
 
-cpdef unsigned char[:] write_png_to_memory(const unsigned char[:, :, :] image):
+cpdef np.ndarray[np.uint8_t, ndim=1] write_png_to_memory(const unsigned char[:, :, :] image):
     cdef int out_len
     cdef unsigned char* data = stbi_write_png_to_mem(&image[0, 0, 0], 0, image.shape[0], image.shape[1], image.shape[2], &out_len)
     if data is NULL:
