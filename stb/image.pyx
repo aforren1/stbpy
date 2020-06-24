@@ -42,7 +42,7 @@ cpdef load_from_memory(const unsigned char[:] buffer):
     PyArray_ENABLEFLAGS(arr, np.NPY_ARRAY_OWNDATA)
     return arr
 
-cpdef resize(const unsigned char[:, :, :] image, int width, int height):
+cpdef resize(const unsigned char[:, :, :] image, unsigned int width, unsigned int height):
     cdef unsigned char* data = <unsigned char*> malloc(width * height * image.shape[2])
     if not data:
         raise MemoryError()
