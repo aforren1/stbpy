@@ -22,7 +22,7 @@ with open("README.md", "r") as f:
 setuptools.setup(
     name="stb",
     version="0.0.1",
-    #install_requires=requirements,
+    #install_requires=['numpy'],
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="",
