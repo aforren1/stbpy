@@ -12,6 +12,7 @@ ext = [Extension('stb.image',
                  sources=['stb/image.pyx'],
                  include_dirs=[inc_path],
                  define_macros=defs)]
+
 with open("README.md", "r") as f:
     long_description = f.read()
 
