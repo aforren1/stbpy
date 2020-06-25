@@ -2,7 +2,7 @@
 
 Python interface to https://github.com/nothings/stb/.
 
-Currently wraps stb_image, stb_image_resize, and stb_write (though not completely in any case)
+Currently wraps stb_image, stb_image_resize, and stb_image_write (though not completely in any case)
 
 Install with `pip install stbpy`, and see test.py for usage examples.
 
