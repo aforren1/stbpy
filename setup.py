@@ -11,7 +11,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.3a2",
+    version="0.0.3",
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="Cython wrapper for nothings/stb",
