@@ -1,4 +1,10 @@
 # cython: c_string_type=unicode, c_string_encoding=ascii
+#cython: boundscheck=False
+#cython: nonecheck=False
+#cython: wraparound=False
+#cython: infertypes=True
+#cython: initializedcheck=False
+#cython: cdivision=True
 from cython.view cimport array
 from libc.stdlib cimport malloc, free
 import os.path as op
