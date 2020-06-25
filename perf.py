@@ -11,6 +11,7 @@ stb_setup = 'import stb.image as im'
 pil_setup = 'from PIL import Image'
 
 timethat('x = im.load(fn)', number=num, setup=stb_setup, globs=globals())
+timethat('x = np.asarray(im.load(fn))', number=num, setup=stb_setup+';import numpy as np', globs=globals())
 timethat('x = Image.open(fn)', number=num, setup=pil_setup, globs=globals())
 timethat('x = Image.open(fn).getdata()', number=num, setup=pil_setup, globs=globals())
 timethat('x = Image.open(fn).tobytes()', number=num, setup=pil_setup, globs=globals())

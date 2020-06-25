@@ -1,5 +1,5 @@
 build/
-stb.egg-info/
+*.egg-info/
 *.html
 *.c
 *.pyd

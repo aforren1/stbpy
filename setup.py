@@ -2,21 +2,16 @@ import setuptools
 import sys
 from Cython.Build import cythonize
 from setuptools.extension import Extension
-import numpy as np
 from sys import platform
 
-ext = [Extension('stb.image',
-                 sources=['stb/image.pyx'],
-                 include_dirs=[np.get_include()],
-                 define_macros=[("NPY_NO_DEPRECATED_API", "NPY_1_7_API_VERSION")])]
+ext = [Extension('stb.image', sources=['stb/image.pyx'])]
 
 with open("README.md", "r") as f:
     long_description = f.read()
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.2",
-    install_requires=['numpy'],
+    version="0.0.3a1",
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="Cython wrapper for nothings/stb",
