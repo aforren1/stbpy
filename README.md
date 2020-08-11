@@ -1,3 +1,4 @@
+[![image](https://img.shields.io/pypi/v/stbpy.svg)](https://pypi.python.org/pypi/stbpy)
 ![Build](https://github.com/aforren1/stbpy/workflows/Build/badge.svg?branch=master)
 
 Python interface to https://github.com/nothings/stb/.

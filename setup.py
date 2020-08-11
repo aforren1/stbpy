@@ -11,7 +11,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.3",
+    version="0.0.4",
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="Cython wrapper for nothings/stb",
@@ -24,5 +24,7 @@ setuptools.setup(
         "License :: OSI Approved :: MIT License",
         "Operating System :: OS Independent",
     ],
-    ext_modules=cythonize(ext, compiler_directives={'language_level': 3}, annotate=True)
+    ext_modules=cythonize(ext,
+                          compiler_directives={'language_level': 3},
+                          annotate=True)
 )
