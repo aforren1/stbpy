@@ -4,14 +4,20 @@ from Cython.Build import cythonize
 from setuptools.extension import Extension
 from sys import platform
 
-ext = [Extension('stb.image', sources=['stb/image.pyx'])]
+extra_compile_args = []
+if sys.platform == 'linux':
+    extra_compile_args.append('-g0')
+
+ext = [Extension('stb.image',
+                 sources=['stb/image.pyx'],
+                 extra_compile_args=extra_compile_args)]
 
 with open("README.md", "r") as f:
     long_description = f.read()
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.4",
+    version="0.0.5a1",
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="Cython wrapper for nothings/stb",
