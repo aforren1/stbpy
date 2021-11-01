@@ -1,4 +1,4 @@
-# cython: c_string_type=unicode, c_string_encoding=ascii
+#cython: c_string_type=unicode, c_string_encoding=ascii
 #cython: boundscheck=False
 #cython: nonecheck=False
 #cython: wraparound=False

@@ -2,7 +2,6 @@ import setuptools
 import sys
 from Cython.Build import cythonize
 from setuptools.extension import Extension
-from sys import platform
 
 extra_compile_args = []
 if sys.platform == 'linux':
@@ -17,7 +16,7 @@ with open("README.md", "r") as f:
 
 setuptools.setup(
     name="stbpy",
-    version="0.0.5",
+    version="0.0.6",
     author="Alex Forrence",
     author_email="alex.forrence@gmail.com",
     description="Cython wrapper for nothings/stb",
