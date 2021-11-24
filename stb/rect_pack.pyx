@@ -6,7 +6,7 @@
 #cython: initializedcheck=False
 #cython: cdivision=True
 cimport cython
-from cpython.mem cimport PyMem_Malloc, PyMem_Free
+from cpython.mem cimport PyMem_Malloc, PyMem_Free, PyMem_Calloc
 import os.path as op
 
 cdef extern from *:
@@ -49,15 +49,18 @@ cdef class AtlasPacker:
     cdef stbrp_context* context
     cdef int width
     cdef int height
+    cdef int pad
     cdef int num_nodes
     cdef int heuristic
     # 
     cdef int num_keys
     cdef stbrp_node* nodes
+    cdef unsigned int* atlas
 
-    def __init__(self, width, height, heuristic=Heuristic.DEFAULT):
+    def __init__(self, width, height, pad=2, heuristic=Heuristic.DEFAULT):
         self.width = width
         self.height = height
+        self.pad = pad
         self.num_nodes = width
         self.heuristic = heuristic
         self.keys = []
@@ -67,27 +70,33 @@ cdef class AtlasPacker:
         # take list of image paths
         # return nothing for now (or just warning/err)-- on request, give memoryview & dict
         if self.context == NULL:
-            self.nodes = <unsigned char*> PyMem_Malloc(self.num_nodes * sizeof(stbrp_node))
+            self.nodes = <stbrp_node*> PyMem_Malloc(self.num_nodes * sizeof(stbrp_node))
             stbrp_init_target(self.context, self.width, self.height, self.nodes, self.num_nodes)
             stbrp_setup_heuristic(self.context, self.heuristic)
+            self.atlas = <unsigned int*> PyMem_Calloc(self.width * self.height * 4, sizeof(int))
+
         
         # step 1: read image attributes
         potential_keys = []
         cdef int counter = 0
         cdef stbrp_rect* rects
         cdef int x, y, channels_in_file
-        cdef stbrp_rect temp_rect
         try:
             rects = <stbrp_rect*> PyMem_Malloc(len(images) * sizeof(stbrp_rect))
             for im in images:
                 if not stbi_info(im, &x, &y, &channels_in_file):
                     raise RuntimeError('Image property query failed. %s' % stbi_failure_reason())
                 potential_keys.append(op.splitext(op.basename(im))[0])
-                temp_rect = &rects[counter]
-                temp_rect.id = counter
-                temp_rect.w = x
-                temp_rect.h = y
+                rects[counter].id = counter
+                rects[counter].w = x
+                rects[counter].h = y
                 counter += 1
+            
+            # step 2: pack the rects (incorporating padding)
+
+            # step 3: read in images and stick in memoryview, adding padding 
+            # see https://stackoverflow.com/q/12273047/2690232
+            # for padding ideas
             
         # all done, free rects
         finally:
@@ -96,6 +105,7 @@ cdef class AtlasPacker:
     
     def __dealloc__(self):
         PyMem_Free(self.nodes)
+        PyMem_Free(self.atlas)
         
 
 
